@@ -32,7 +32,6 @@ view: generate_iv_key {
       ) as key_iv
      ;;
   }
-  filter: user_attribute_uuid {type: string sql: {{_user_attributes['uuid']}} ;; }
   dimension: uuid {  }
   dimension: key {
     type: string
@@ -40,7 +39,7 @@ view: generate_iv_key {
   }
   dimension: iv {
     type: string
-    sql: decode(${TABLE}.uuid, 'base64') ;;
+    sql: decode(${TABLE}.iv, 'base64') ;;
   }
 }
 
