@@ -21,7 +21,9 @@ view: generate_iv_key {
     sql:
     WITH uuid_cte as (
       SELECT patient.uuid FROM ${patient.SQL_TABLE_NAME} as patient -- replace FROM clause with FROM your_account_table
-      WHERE patient.uuid IN {{ _user_attributes["uuid"] | replace: ",","','" | append: "')" | prepend: "('" }}
+      {% if _user_attributes["uuid"] <> '%' %}
+        WHERE patient.uuid IN {{ _user_attributes["uuid"] | replace: ",","','" | append: "')" | prepend: "('" }}
+      {% endif %}
     )
     SELECT uuid, key_iv.key, key_iv,iv
     FROM (
